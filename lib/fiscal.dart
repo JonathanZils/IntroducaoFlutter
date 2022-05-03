@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 enum Sexo { masculino, feminino }
 
 class Pessoa {
@@ -18,54 +20,37 @@ class NotaFiscal {
 
   NotaFiscal({this.numero, this.emissao, this.cliente, this.enderecoEntrega});
 
-  double calcularValorTotal() {
-    double total = 0.0;
-    for (int i = 0; i < itens.length; i++) {
-      total += itens[i].calcularValorTotalIten();
-    }
-    return total;
+  double calcularValorTotal(){
+    return itens.map((e) => e.calcularValorTotalIten()).reduce((a,b) => a+ b);
+
   }
 
   double calcularDescontoTotal() {
-    double total = 0.0;
-    for (ItemNF item in itens) {
-      total += item.desconto;
-    }
-    return total;
+   return itens.map((e) => e.desconto).reduce((a,b) => a + b);
   }
 
   double calcularTotalAcrescimos() {
-    double total = 0.0;
-    for (ItemNF item in itens) {
-      total += item.acrescimo;
-    }
-    return total;
+    return itens.map((e) => e.acrescimo).reduce((a,b) => a + b);
   }
 
   ItemNF? getProdutoMaisBarato() {
-    ItemNF? itemMaisBarato;
-    for (ItemNF item in itens) {
-      if (itemMaisBarato == null) {
-        itemMaisBarato = item;
-      } else if (item.calcularValorTotalIten() <
-          itemMaisBarato.calcularValorTotalIten()) {
-        itemMaisBarato = item;
-      }
-    }
-    return itemMaisBarato;
+   return itens.reduce((a,b) => a.calcularValorTotalIten() < b.calcularValorTotalIten() ? a : b);
   }
 
   ItemNF? getProdutoMaisCaro() {
-    ItemNF? itemMaisCaro;
-    for (ItemNF item in itens) {
-      if (itemMaisCaro == null) {
-        itemMaisCaro = item;
-      } else if (item.calcularValorTotalIten() >
-          itemMaisCaro.calcularValorTotalIten()) {
-        itemMaisCaro = item;
-      }
-    }
-    return itemMaisCaro;
+   return itens.reduce((a,b) => a.calcularValorTotalIten() > b.calcularValorTotalIten() ? a : b);
+  }
+
+  bool possuiDesconto(){
+    return itens.any((c) => c.desconto > 0);
+  }
+
+  List<ItemNF> itensComDesconto(){
+    return itens.where((c) => c.desconto > 0).toList();
+  }
+
+  String getStrItens(){
+    return itens.map((e) => "${e.numSeq} : ${e.produto}").join(', ');
   }
 
   ItemNF? addItem(
@@ -111,10 +96,37 @@ class ItemNF {
   }
 }
 
-void mainNotaFiscal() {
-  final pessoa = Pessoa(nome: 'zils');
-  final nota = NotaFiscal(cliente: pessoa);
-  nota.addItem(produto: 'notebook', valor: 1000.0, acrescimo: 150.0);
-  nota.addItem(produto: 'teclado', valor: 200.0);
-  print('Valor total da nota : ${nota.getProdutoMaisBarato()}');
+Future<void> mainNotaFiscal() async {
+  // final pessoa = Pessoa(nome: 'zils');
+  // final nota = NotaFiscal(cliente: pessoa);
+  // nota.addItem(produto: 'notebook', valor: 1000.0, acrescimo: 150.0);
+  // nota.addItem(produto: 'teclado', valor: 200.0);
+  // final valorTotal = await nota.calcularValorTotal();
+  // print('Valor total da nota : ${nota.getProdutoMaisBarato()}');
+
+
+  // Set<String> nomes = Set<String>();
+  // nomes.add('Jao');
+  // nomes.add('Samuel');
+  // nomes.add('Torfin');
+  // nomes.add('Deb');
+  // nomes.add('Clark');
+  // nomes.add('Serjey');
+  // print(nomes.runtimeType);//mostra o tipo
+  // if(nomes.contains('jao')){
+  //   print('jao esta aqui');
+  // }else{
+  //   print('jao não esta aqui');
+  // }
+
+  // Queue<String> fila = Queue<String>();
+  // fila.add('Jao');
+  // fila.add('Samuel');
+  // fila.add('Torfin');
+  // fila.add('Deb');
+  // fila.add('Clark');
+  // fila.add('Serjey');
+
+
+
 }
