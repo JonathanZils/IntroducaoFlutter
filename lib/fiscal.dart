@@ -20,36 +20,37 @@ class NotaFiscal {
 
   NotaFiscal({this.numero, this.emissao, this.cliente, this.enderecoEntrega});
 
-  double calcularValorTotal(){
-    return itens.map((e) => e.calcularValorTotalIten()).reduce((a,b) => a+ b);
-
+  double calcularValorTotal() {
+    return itens.map((e) => e.calcularValorTotalIten()).reduce((a, b) => a + b);
   }
 
   double calcularDescontoTotal() {
-   return itens.map((e) => e.desconto).reduce((a,b) => a + b);
+    return itens.map((e) => e.desconto).reduce((a, b) => a + b);
   }
 
   double calcularTotalAcrescimos() {
-    return itens.map((e) => e.acrescimo).reduce((a,b) => a + b);
+    return itens.map((e) => e.acrescimo).reduce((a, b) => a + b);
   }
 
   ItemNF? getProdutoMaisBarato() {
-   return itens.reduce((a,b) => a.calcularValorTotalIten() < b.calcularValorTotalIten() ? a : b);
+    return itens.reduce((a, b) =>
+        a.calcularValorTotalIten() < b.calcularValorTotalIten() ? a : b);
   }
 
   ItemNF? getProdutoMaisCaro() {
-   return itens.reduce((a,b) => a.calcularValorTotalIten() > b.calcularValorTotalIten() ? a : b);
+    return itens.reduce((a, b) =>
+        a.calcularValorTotalIten() > b.calcularValorTotalIten() ? a : b);
   }
 
-  bool possuiDesconto(){
+  bool possuiDesconto() {
     return itens.any((c) => c.desconto > 0);
   }
 
-  List<ItemNF> itensComDesconto(){
+  List<ItemNF> itensComDesconto() {
     return itens.where((c) => c.desconto > 0).toList();
   }
 
-  String getStrItens(){
+  String getStrItens() {
     return itens.map((e) => "${e.numSeq} : ${e.produto}").join(', ');
   }
 
@@ -104,7 +105,6 @@ Future<void> mainNotaFiscal() async {
   // final valorTotal = await nota.calcularValorTotal();
   // print('Valor total da nota : ${nota.getProdutoMaisBarato()}');
 
-
   // Set<String> nomes = Set<String>();
   // nomes.add('Jao');
   // nomes.add('Samuel');
@@ -126,7 +126,4 @@ Future<void> mainNotaFiscal() async {
   // fila.add('Deb');
   // fila.add('Clark');
   // fila.add('Serjey');
-
-
-
 }
