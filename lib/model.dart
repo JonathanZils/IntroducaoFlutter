@@ -71,16 +71,26 @@ class Programador extends Pessoa{
 
 
 void mainEntidades(){
-  final map = {
-    'nome': 'Zils',
-    'nascimento': '1995-09-12',
-    'sexo': 'M',
-    'salario': '10000.0'
-  };
+  // final map = {
+  //   'nome': 'Zils',
+  //   'nascimento': '1995-09-12',
+  //   'sexo': 'M',
+  //   'salario': '10000.0'
+  // };
 
-  Pessoa pessoa = Pessoa.fromMap(map);
+//   Pessoa pessoa = Pessoa.fromMap(map);
+//
+// print(pessoa);
 
-print(pessoa);
+
+//for tradicional estilo java/php
+List<String> nome = ['Carlos', 'jão', 'samuel'];
+for(int i = 0; i < nome.length; i++){
+  if(nome[i].toUpperCase().startsWith('s')){
+    break;
+  }
+  print("$i - ${nome[i]}");
+}
 
   // Pessoa pessoa = Programador();
   //

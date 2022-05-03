@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introducaoflutter/model.dart';
+import 'package:introducaoflutter/fiscal.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    mainEntidades();
+    mainNotaFiscal();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
